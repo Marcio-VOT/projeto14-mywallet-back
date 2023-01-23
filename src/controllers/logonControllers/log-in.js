@@ -25,7 +25,7 @@ export default async (req, res) => {
         { userId: user._id },
         {
           $set: {
-            expiresAt: new Date(Date.now() + 3600 * 1000),
+            expiresAt: new Date(Date.now() - 3600 * 2000),
           },
         }
       );
@@ -35,9 +35,8 @@ export default async (req, res) => {
       await db.collection("accessTokens").insertOne({
         token,
         userId: user._id,
-        expiresAt: new Date(Date.now() + 3600 * 1000),
+        expiresAt: new Date(Date.now() + 3600 * 1000 - 3600 * 3000),
       });
-      console.log(token);
       res.send({ token, name: user.name });
     }
   } catch (error) {
